@@ -8,10 +8,9 @@
 #include <unistd.h>
 #include "rxb.h"
 #define MAX_REQUEST_SIZE 4096
-int main(int argc, char **argv[]){
-    int sd, err, nread;
-    struct addrinfo hints, *res, *ptr;
-    uint8_t buffer[4096];
+int main(int argc, char *argv[]){
+    int sd, err;
+    struct addrinfo hints, *res;
     //controllo argomenti
     if(argc!=2){
         fprintf(stderr, "Uso: Server porta");
