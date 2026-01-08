@@ -35,7 +35,7 @@ int main(int argc, char **argv){
     }
     
     //tentativo di connessione
-    for(ptr=res; ptr!=NULL; ptr->ai_next){ //scorre tutti gli indirizzi possibili
+    for(ptr=res; ptr!=NULL; ptr=ptr->ai_next){ //scorre tutti gli indirizzi possibili
         sd=socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol); //crea una socket con i parametri di getaddrinfo
         if(sd<0){ //se fallisce passa all'indirizzo successivo
             continue;
@@ -55,7 +55,7 @@ int main(int argc, char **argv){
     freeaddrinfo(res); //libera la memoria usata da getaddrinfo
 
     //scrivo il nome del file in UTF-8
-    err=write_all(sd, argv[3], strlen(argv[3])); //write potrebbe scrivere meno byte, write_all no
+    err=write(sd, argv[3], strlen(argv[3])); //write potrebbe scrivere meno byte, write_all no
     if(err<0){
         fprintf(stderr, "Errore write");
         exit(EXIT_FAILURE);
@@ -68,7 +68,7 @@ int main(int argc, char **argv){
     }
     //lettura della risposta
     while((nread=read(sd, buffer, sizeof(buffer)))>0){ //legge dal server finche` non chiude la connessione
-        err=write_all(1, buffer, nread);//scrivo sullo stdout
+        err=write(1, buffer, nread);//scrivo sullo stdout
                                         //raccoglie i dati nel buffer fino a sizeof(buffer)
         if(err<0){
             fprintf(stderr, "Errore write");
