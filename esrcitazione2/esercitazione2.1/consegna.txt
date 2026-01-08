@@ -1,0 +1,17 @@
+Si realizzi un'applicazione distribuita in C/UNIX che, sfruttando le socket
+API, implementi un servizio di confronto remoto fra stringhe.
+
+L'applicazione deve avere la seguente interfaccia:
+	rstrcmp hostname porta stringa1 stringa2
+
+dove hostname e` il nome dell'host dove risiede il server, porta e` il numero di
+porta a cui esso e` associato e stringa1 e stringa2 sono le stringhe che si
+vogliono confrontare.
+
+Per prima cosa, il client deve inviare al server le stringhe a cui l'utente e`
+interessato. Il server deve quindi effettuare il confronto lessicografico tra
+le stringhe e restituire al clien "SI" se le stringhe sono identiche e "NO"
+in caso contrario. Il client deve stampare a video il risultato rievuto dal server
+e terminare.
+
+Opzionalmente, se realizzi anche il client in java.
