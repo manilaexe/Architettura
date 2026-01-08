@@ -1,0 +1,13 @@
+Si realizzi un'applicazione distribuita che permetta ad un utente di leggere le prime 5 righe di un file
+di testo che risiede nel filesystem del Server (UTF-8).
+
+L'applicazione deve avere la seguente interfaccia: 
+        java RemoteHeadClient hostname porta nomefile
+dove hostname e` il nome dell'host dove risiede il Server, porta e` il numero di portaa cui esso e` associato e 
+nomefile e` il file di cui si vogliono leggere le prime 5 righe.
+
+Per prima cosa, il Client deve inviare al server il nome del file a cui 
+l'utente e` interessato. Il Server deve quindi controllare se il file esiste o meno.
+In caso affermativo, il Server deve leggere le prime 5 righe del file e 
+trasmetterle al client, il Server deve limitarsi a chiudere la connessione con il Client
+senza inviare alcun messaggio di errore
