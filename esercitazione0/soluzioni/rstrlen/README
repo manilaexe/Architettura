@@ -1,0 +1,23 @@
+Questi esempi di codice presentano due diverse soluzioni dell'esercizio. La
+prima è una soluzione "naive", basata sull'assunzione che la prima read lato
+Server catturi interamente la stringa inviata dal Client, che sappiamo essere
+di semplice realizzazione ma di robustezza inadeguata per applicazioni
+real-life.
+
+La seconda soluzione usa un protocollo basato sull'approccio terminated-data.
+Ovverosia, tutte le stringhe inviate sono delimitate da un terminatore '\n'.
+Purtroppo il linguaggio C non fornisce un'implementazione della funzione
+readline (in realità esiste una funzione readline ma è un'estensione GNU
+specific ed è sostanzialmente disponibile solo sotto Linux), quindi dobbiamo
+realizzarla noi. A questo proposito la soluzone fornisce una libreria
+appositamente sviluppata nei file rxb.h e rxb.c.
+
+Questo esempio di codice può essere compilato con libunistring per un supporto
+corretto alle stringhe UTF-8. Per prima cosa ci si accerti di avere installato
+la libreria nel proprio sistema. Quindi per compilare si digiti:
+
+	make USE_LIBUNISTRING=yes
+
+Se non viene specificata l'opzione USE_LIBUNISTRING, make compila il codice
+senza la libreria unistring e il Server usa la funzione strlen per conteggiare
+i caratteri nella stringa (semanticamente incorretto ma accettabile).
