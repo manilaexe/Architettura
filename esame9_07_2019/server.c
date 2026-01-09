@@ -111,6 +111,7 @@
                 //leggere 3 info
                 while(1){
                     char *end="--- END REQUEST ----\n";
+                    int pid_cut, pid_sort, pid_sort, status;
                     memset(username, 0, sizeof(username));
                     username_len=sizeof(username)-1; //-1 per il terminatore
                     err=rxb_readline(&rxb, ns, username, &username_len);
@@ -143,6 +144,16 @@
                     }
 
                     //se ok 3 fork -> creo nipoti
+                    signal(SIGCHLD, SIG_DFL);
+                    pid_cut=fork();
+                    pid_sort=fork();
+                    pid_head=fork();
+                    wait(pid(pid_cut, &status, 0));
+                    wait(pid(pid_sort, &status, 0));
+                    wait(pid(pid_head, &status, 0));
+                    
+                    write_all(ns, end, strlen(end));
+
                 }
 
 
