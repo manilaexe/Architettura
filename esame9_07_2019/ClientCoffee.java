@@ -4,6 +4,10 @@ import java.io.*;
 class ClientCoffee{
 
 	public static void main(String[] args) {
+		if(args.length!=2){
+			System.err.println("Usage: java ClientCoffee server porta");
+			System.exit(1);
+		}
 		try{
 			Socket s = new Socket(args[0], Integer.parseInt(args[1]));
 			BufferedReader netIn = new BufferedReader(new InputStreamReader(s.getInputStream(), "UTF-8"));
