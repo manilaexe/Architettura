@@ -2,7 +2,7 @@ Si realizzi un'applicazione distribuita che permetta ad un utente di leggere le 
 di testo che risiede nel filesystem del Server (UTF-8).
 
 L'applicazione deve avere la seguente interfaccia: 
-        java RemoteHeadClient hostname porta nomefile
+        RemoteHeadClient hostname porta nomefile
 dove hostname e` il nome dell'host dove risiede il Server, porta e` il numero di portaa cui esso e` associato e 
 nomefile e` il file di cui si vogliono leggere le prime 5 righe.
 
