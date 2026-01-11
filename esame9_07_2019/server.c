@@ -110,7 +110,7 @@
 
                 //leggere 3 info
                 while(1){
-                    char *end="--- END REQUEST ----\n";
+                    char *end="--- END REQUEST ---";
                     int pid_cut, pid_sort, pid_head, status;
                     memset(username, 0, sizeof(username));
                     username_len=sizeof(username)-1; //-1 per il terminatore
@@ -130,7 +130,7 @@
 
                     memset(categoria, 0, sizeof(categoria));
                     categoria_len=sizeof(categoria)-1; //-1 per il terminatore
-                    err=rxb_readline(&rxb, ns, categoria_len, &categoria_len);
+                    err=rxb_readline(&rxb, ns, categoria, &categoria_len);
                     if(err<0){
                         fprintf(stderr, "Errore");
                         exit(EXIT_FAILURE);
