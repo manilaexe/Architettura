@@ -27,6 +27,7 @@
 
     int main(int argc, char *argv[]){
 
+        //controllo degli argomenti
         if(argc!=2){
             fprintf(stderr, "Uso:server porta");
             exit(EXIT_FAILURE);        
@@ -34,9 +35,9 @@
 
         int err, sd, on; 
         struct addrinfo hints, *res;
-
         struct  sigaction sa={0};
 
+        //gestione SIGCHLD
         sigemptyset(&sa.sa_mask);
         sa.sa_flags=SA_RESTART;
         sa.sa_handler=handler;
@@ -46,6 +47,7 @@
             exit(EXIT_FAILURE);
         }
 
+        //preparazione della socket passiva
         memset(&hints, 0, sizeof(hints));
         hints.ai_family=AF_UNSPEC;
         hints.ai_socktype=SOCK_STREAM;
@@ -84,6 +86,7 @@
             exit(EXIT_FAILURE);
         }
         
+        //ciclo di accettazione del client
         while(1){
             int ns, pid_f;
             ns=accept(sd, NULL, NULL);
@@ -105,13 +108,14 @@
                 size_t username_len, password_len, categoria_len;
                 close(sd); //chiudo socket passiva
                 
-                //creo buvver rxb
+                //creo buffer rxb
                 rxb_init(&rxb, MAX_REQUEST_SIZE*2);
 
-                //leggere 3 info
+                //gestione richieste client
                 while(1){
                     char *end="--- END REQUEST ---";
-                    int pid_cut, pid_sort, pid_head, status;
+                    int pid_cut, pid_sort, pid_head, status, pipe_cs[2], pipe_ch[2];
+
                     memset(username, 0, sizeof(username));
                     username_len=sizeof(username)-1; //-1 per il terminatore
                     err=rxb_readline(&rxb, ns, username, &username_len);
@@ -227,9 +231,6 @@
                     write_all(ns, end, strlen(end));
 
                 }
-
-
-
                 close(ns);
                 rxb_destroy(&rxb);
                 exit(EXIT_SUCCESS);
