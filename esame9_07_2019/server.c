@@ -26,7 +26,6 @@
 
 
     int main(int argc, char *argv[]){
-
         //controllo degli argomenti
         if(argc!=2){
             fprintf(stderr, "Uso:server porta");
@@ -36,7 +35,6 @@
         int err, sd, on; 
         struct addrinfo hints, *res;
         struct  sigaction sa={0};
-
         //gestione SIGCHLD
         sigemptyset(&sa.sa_mask);
         sa.sa_flags=SA_RESTART;
@@ -46,7 +44,6 @@
             perror("sigaction");
             exit(EXIT_FAILURE);
         }
-
         //preparazione della socket passiva
         memset(&hints, 0, sizeof(hints));
         hints.ai_family=AF_UNSPEC;
@@ -64,28 +61,24 @@
             fprintf(stderr, "Errore");
             exit(EXIT_FAILURE);
         }
-
         //opzionale ma utile perche` cosi` e` possibile rilanciare il server sulla stessa socket
         on=1;
         if(setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))<0){
             perror("setsockopt");
             exit(EXIT_FAILURE);
         }
-
         //bind
         err=bind(sd, res->ai_addr, res->ai_addrlen);
         if(err<0){
             fprintf(stderr, "Errore");
             exit(EXIT_FAILURE);
         }
-
         //listen
         err=listen(sd, SOMAXCONN);
         if(err<0){
             fprintf(stderr, "Errore");
             exit(EXIT_FAILURE);
-        }
-        
+        }     
         //ciclo di accettazione del client
         while(1){
             int ns, pid_f;
@@ -163,7 +156,6 @@
 						//snprintf(nomefile, sizeof(nomefile), "/var/local/macchine_caffe/%s.txt", categoria);
 						//strcpy(nomefile, categoria); strcat(nomefile, .txt); alternativa
 						snprintf(nomefile, sizeof(nomefile), "/%s.txt", categoria);
-
 						
 						execlp("cut", "cut", "-d", ",", "-f", "1,3,4", nomefile, NULL); //-d, limitatore
 						perror("errore exec cut");
@@ -193,7 +185,6 @@
 						execlp("sort", "sort", "-rn", NULL); //sort inverso numerico
 						perror("errore exec cut");
 						exit(EXIT_FAILURE);
-						
 					}
 
                     pid_head=fork();
@@ -201,7 +192,6 @@
 						fprintf(stderr, "Errore");
                         exit(EXIT_FAILURE);
 					}else if(pid_head==0){ //nipote head
-
 						close(pipe_cs[1]);
 						close(pipe_cs[0]);	
 
@@ -229,18 +219,14 @@
                     wait(pid(pid_head, &status, 0));
                     
                     write_all(ns, end, strlen(end));
-
                 }
                 close(ns);
                 rxb_destroy(&rxb);
                 exit(EXIT_SUCCESS);
-
             }
             //padre
             close(ns);
         }
-
-        close(sd);
-        
+        close(sd);       
         return 0;
-    }
+}
