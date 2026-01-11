@@ -96,7 +96,7 @@ int main(int argc, char *argv[]){
 
         //lettura risposta del server
         while(1){
-            size_t buflen=sizeof(line-1);
+            size_t buflen=sizeof(line)-1;
             memset(line, 0, sizeof(line));
 
             err=rxb_readline(&rxb, sd, line, &buflen);  
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]){
                 exit(EXIT_FAILURE);              
             }
 
-            if(strcmp(line, "--- END REQUEST ---")==0){
+            if(strcmp(line, "--- END REQUEST ---\n")==0){
                 break;
             }
             puts(line);
