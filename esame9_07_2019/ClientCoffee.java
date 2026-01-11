@@ -16,6 +16,10 @@ class ClientCoffee{
 			while(true){
 				System.out.println("Inserisci username: ");
 				String username = keyboard.readLine();
+				if(username.equals("fine"){
+					s.close();
+					System.exit(0);
+				}
 
 				System.out.println("Inserisci password: ");
 				String password = keyboard.readLine();
