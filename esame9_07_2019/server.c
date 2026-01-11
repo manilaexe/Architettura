@@ -214,9 +214,9 @@
 					close(pipe_ch[0]);
 					close(pipe_cs[1]);
 					close(pipe_cs[0]);
-                    wait(pid(pid_cut, &status, 0));
-                    wait(pid(pid_sort, &status, 0));
-                    wait(pid(pid_head, &status, 0));
+                    waitpid(pid_cut, &status, 0);
+                    waitpid(pid_sort, &status, 0);
+                    waitpid(pid_head, &status, 0);
                     
                     write_all(ns, end, strlen(end));
                 }
