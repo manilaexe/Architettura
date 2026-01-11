@@ -111,7 +111,7 @@
                 //leggere 3 info
                 while(1){
                     char *end="--- END REQUEST ----\n";
-                    int pid_cut, pid_sort, pid_sort, status;
+                    int pid_cut, pid_sort, pid_head, status;
                     memset(username, 0, sizeof(username));
                     username_len=sizeof(username)-1; //-1 per il terminatore
                     err=rxb_readline(&rxb, ns, username, &username_len);
