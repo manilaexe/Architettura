@@ -146,8 +146,80 @@
                     //se ok 3 fork -> creo nipoti
                     signal(SIGCHLD, SIG_DFL);
                     pid_cut=fork();
+					if(pid_cut<0){
+						fprintf(stderr, "Errore");
+                        exit(EXIT_FAILURE);
+					}else if(pid_cut==0){ //nipote cut
+						char nomefile[MAX_REQUEST_SIZE];
+						close(ns);
+						close(1);
+						dup(pipe_cs[1]);
+						close(pipe_cs[1]);
+						close(pipe_cs[0]);
+						//snprintf(nomefile, sizeof(nomefile), "/var/local/macchine_caffe/%s.txt", categoria);
+						//strcpy(nomefile, categoria); strcat(nomefile, .txt); alternativa
+						snprintf(nomefile, sizeof(nomefile), "/%s.txt", categoria);
+
+						
+						execlp("cut", "cut", "-d", ",", "-f", "1,3,4", nomefile, NULL); //-d, limitatore
+						perror("errore exec cut");
+						exit(EXIT_FAILURE);
+					}
+					if(pipe(pipe_ch)<0){
+						fprintf(stderr, "Errore");
+                        exit(EXIT_FAILURE);
+					}
+
                     pid_sort=fork();
+					if(pid_sort<0){
+						fprintf(stderr, "Errore");
+                        exit(EXIT_FAILURE);
+					}else if(pid_sort==0){ //nipote sort
+						close(ns);
+						close(0);
+						dup(pipe_cs[0]);
+						close(pipe_cs[1]);
+						close(pipe_cs[0]);	
+
+						close(1);
+						dup(pipe_ch[1]);
+						close(pipe_ch[1]);
+						close(pipe_ch[0]);	
+	
+						execlp("sort", "sort", "-rn", NULL); //sort inverso numerico
+						perror("errore exec cut");
+						exit(EXIT_FAILURE);
+						
+					}
+
                     pid_head=fork();
+					if(pid_head<0){
+						fprintf(stderr, "Errore");
+                        exit(EXIT_FAILURE);
+					}else if(pid_head==0){ //nipote head
+
+						close(pipe_cs[1]);
+						close(pipe_cs[0]);	
+
+						close(0);
+						dup(pipe_ch[0]);
+						close(pipe_ch[1]);
+						close(pipe_ch[0]);	
+
+						close(1);
+						dup(ns);
+						close(ns);
+
+						execlp("head", "head", "-n", "10", NULL); //sort inverso numerico
+						perror("errore exec cut");
+						exit(EXIT_FAILURE);
+					}
+
+					//chiudo le pipe che non usa il figlio
+					close(pipe_ch[1]);
+					close(pipe_ch[0]);
+					close(pipe_cs[1]);
+					close(pipe_cs[0]);
                     wait(pid(pid_cut, &status, 0));
                     wait(pid(pid_sort, &status, 0));
                     wait(pid(pid_head, &status, 0));
