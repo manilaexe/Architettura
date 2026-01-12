@@ -1,0 +1,28 @@
+Si progetti un’applicazione Client/Server che, utilizzando le socket, permetta a un
+turista di selezionare il pacchetto vacanze più conforme alle proprie esigenze.
+L’applicazione deve presentare la seguente interfaccia:
+pacchetti_vacanze server porta
+
+dove server rappresenta il nome logico del Server e porta rappresenta il numero di
+porta del servizio.
+Per prima cosa, il Client si deve interfacciare con l’utente, da cui riceve (via
+terminale) il mese (es., “gennaio”, “febbraio”, ecc.), la tipologia (es., "famiglia",
+“romantica”, “sportiva”, ecc.), e la località di interesse (es., “Cortina”, “Tenerife”,
+ecc.). Il Client deve quindi trasmettere le informazioni al Server, che a sua volta
+dovrà trovare tutti i pacchetti vacanze disponibili per mese, tipologia e località di
+interesse, e restituirle in ordine di costo decrescente al Client.
+A questo proposito, si supponga che le informazioni sui pacchetti vacanze siano
+salvate sul Server in una serie di file di testo, ciascuno dei quali conterrà le
+informazioni per uno specifico mese. Si supponga inoltre che tutti i file contenenti le
+informazioni sui pacchetti vacanze di una specifica tipologia siano raggruppati in un
+direttorio corrispondente all’interno del percorso /var/local/holidays . Quindi, per 1
+esempio, le informazioni sui pacchetti vacanze di tipologia “romantica” per il mese di
+aprile saranno salvate nel file /var/local/holidays/romantica/aprile.txt, ecc. Ciascuna
+riga di tali file conterrà tutte le informazioni relative a un singolo pacchetto vacanze,
+con (in quest’ordine) il costo, la data di partenza, la durata in giorni, la località, il
+nome dell’operatore turistico, ecc.
+Una volta ricevute le informazioni dal Server, il Client le stampa a video e si mette in
+attesa della richiesta successiva. Il Client deve terminare quando l’utente digita
+“fine”.
+ATTENZIONE: Si realizzino il Client e il Server in C, ma il Client deve essere
+realizzato anche in Java.
