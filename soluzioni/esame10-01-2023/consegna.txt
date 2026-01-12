@@ -1,0 +1,31 @@
+Arch. di Reti / Reti di Calcolatori – 10 gennaio 2023
+Si progetti un’applicazione Client/Server che, utilizzando le socket, aiuti un maker
+appassionato di domotica (e con un principio di disturbo ossessivo-compulsivo) a
+consultare le informazioni raccolte dai vari sensori installati presso la propria
+abitazione. L’applicazione deve presentare la seguente interfaccia:
+leggi_dati_sensori
+server
+porta
+dove server rappresenta il nome logico del Server e porta rappresenta il numero di
+porta del servizio.
+Per prima cosa, il Client si deve interfacciare con il maker, da cui riceve (via
+terminale) il tipo di sensore (es., “pressione”, “temperatura”, “umidità”, ecc.), il nome
+della stanza in cui esso si trova (es. “cantina”, “soggiorno”, ecc.), e il numero N di
+letture di interesse. Il Client deve quindi trasmettere le informazioni al Server, che a
+sua volta dovrà reperire le N letture più recenti di dati ricevute dal tipo di sensore di
+interesse installato nella camera di interesse e restituirle al Client.
+A questo proposito, si supponga che sul server sia in esecuzione un servizio
+automatico di raccolta dati che periodicamente (es. ogni 30 secondi) contatta tutti i
+vari sensori installati nella casa del maker per ottenere una nuova lettura da
+ciascuno di essi e salva le informazioni in una serie di file di testo all’interno del
+percorso /var/letture_sensori1, ciascuno dei quali conterrà le informazioni per una
+specifica stanza. Quindi, per esempio, le informazioni raccolte dai sensori installati in
+cucina saranno salvate nel file /var/letture_sensori/cucina.txt, elencate in ordine
+cronologico crescente (ovverosia dalla più vecchia alla più recente). Ciascuna riga di
+tale file conterrà le informazioni per una specifica lettura, ovverosia il timestamp di
+lettura, il tipo del sensore, il valore letto, ecc.
+Una volta ricevute le informazioni dal Server, il Client le stampa a video e si mette in
+attesa della richiesta successiva. Il Client deve terminare quando l’utente digita
+“fine”.
+ATTENZIONE: Si realizzino il Client e il Server in C, ma il Client deve essere
+realizzato anche in Java.
